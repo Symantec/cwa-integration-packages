@@ -2,12 +2,12 @@
 # The integration enables you to open Jira tickets for failed checks for manual remediation.
 
 # Prerequisites for CWA integration with Jira
-# 1. Install Python 3.7 or above
-# 2. Import Python Jira Library
+ 1. Install Python 3.7 or above
+ 2. Import Python Jira Library
 
 # Steps to implement the Jira integration
-# 1. Download CWA_Jira_integration.zip
-. The zip file contains the following two files:
+ 1. Download CWA_Jira_integration.zip
+ The zip file contains the following two files:
 	JiraTicketsCWAEvents.py
 	JiraTicketsCWAEventsCongif.ini
 # 2. Open JiraTicketsCWAEventsCongif.ini and provide values for the following fields:
