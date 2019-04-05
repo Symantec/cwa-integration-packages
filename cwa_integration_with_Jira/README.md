@@ -10,20 +10,19 @@ The integration enables you to open Jira tickets for failed checks for manual re
  The zip file contains the following two files:
 	JiraTicketsCWAEvents.py
 	JiraTicketsCWAEventsCongif.ini
-2. Open JiraTicketsCWAEventsCongif.ini and provide values for the following fields:
-	Credentials - Client_ID (You can get this value from the CWA console.)
-		      Client_Secret (You can get this value from the CWA console.)
+2. Open JiraTicketsCWAEventsCongif.ini and provide values for the following fields:<br/>
+	Credentials<br/>- Client_ID (You can get this value from the CWA console.)<br/>
+		      - Client_Secret (You can get this value from the CWA console.)<br/>
 	
-	JiraConfiguration - JiraUrl (Your orgnaization's Jira URL)
-			  - JiraUserName (FirstName_LastName)
-			  - JiraUserPassword (Refer to   "https://www.base64encode.net/")
-			  - JiraProjectID (Refer to  "https://confluence.atlassian.com/jirakb/how-to-get-project-id-from-the-jira-user-                                           interface-827341414.html")
- 
-			  - JiraAssigneeUser (Users to whom the Jira tickets are assigned) (FirstName_LastName)
+	JiraConfiguration <br/>- JiraUrl (Your orgnaization's Jira URL)<br/>
+			  - JiraUserName (FirstName_LastName)<br/>
+			  - JiraUserPassword (Refer to   "https://www.base64encode.net/")<br/>
+			  - JiraProjectID (Refer to  "https://confluence.atlassian.com/jirakb/how-to-get-project-id-from-the-jira-user-                                           interface-827341414.html")<br/>
+			  - JiraAssigneeUser (Users to whom the Jira tickets are assigned) (FirstName_LastName)<br/>
 	
-	Events - EventTypeFilter (filters events of specific event type for which you want to create Jira ticket.)
-	       - EventsType = Compliance Check
-	       - GetEventsFromDays = 1
+	Events<br/> - EventTypeFilter (filters events of specific event type for which you want to create Jira ticket.)<br/>
+	       - EventsType = Compliance Check<br/>
+	       - GetEventsFromDays = 1<br/>
 3. Set up a cron job for the script to run once a day.
 
 			    		    		
