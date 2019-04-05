@@ -1,5 +1,5 @@
 # Cloud Workload Assurance integration with Jira ticketing system. 
-# The integration enables you to open Jira tickets for failed checks for manual remediation.
+The integration enables you to open Jira tickets for failed checks for manual remediation.
 
 # Prerequisites for CWA integration with Jira
  1. Install Python 3.7 or above
@@ -10,7 +10,7 @@
  The zip file contains the following two files:
 	JiraTicketsCWAEvents.py
 	JiraTicketsCWAEventsCongif.ini
-# 2. Open JiraTicketsCWAEventsCongif.ini and provide values for the following fields:
+2. Open JiraTicketsCWAEventsCongif.ini and provide values for the following fields:
 	Credentials - Client_ID (You can get this value from the CWA console.)
 		      Client_Secret (You can get this value from the CWA console.)
 	
@@ -24,7 +24,7 @@
 	Events - EventTypeFilter (filters events of specific event type for which you want to create Jira ticket.)
 	       - EventsType = Compliance Check
 	       - GetEventsFromDays = 1
-# 3. Set up a cron job for the script to run once a day.
+3. Set up a cron job for the script to run once a day.
 
 			    		    		
 
