@@ -7,9 +7,9 @@ The integration enables you to open Jira tickets for failed checks for manual re
 
 # Steps to implement the Jira integration
  1. Download CWA_Jira_integration.zip
- The zip file contains the following two files:
-	JiraTicketsCWAEvents.py
-	JiraTicketsCWAEventsCongif.ini
+ The zip file contains the following two files:<br/>
+	JiraTicketsCWAEvents.py<br/>
+	JiraTicketsCWAEventsCongif.ini<br/>
 2. Open JiraTicketsCWAEventsCongif.ini and provide values for the following fields:<br/>
 	Credentials<br/>- Client_ID (You can get this value from the CWA console.)<br/>
 		      - Client_Secret (You can get this value from the CWA console.)<br/>
