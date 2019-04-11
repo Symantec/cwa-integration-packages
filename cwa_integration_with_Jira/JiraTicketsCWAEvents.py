@@ -50,7 +50,7 @@ fh.setFormatter(formatter)
 # add console handler to logger
 logger.addHandler(fh)
 
-configFileName = 'JiraTicketsCWAEventsCongif.ini'
+configFileName = 'JiraTicketsCWAEventsConfig.ini'
 # Setting variables from config.ini file
 # Reading customer account information
 logger.info("Reading place holders for CWA customer account information from " + configFileName + " file")
