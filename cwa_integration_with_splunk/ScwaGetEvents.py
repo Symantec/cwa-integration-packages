@@ -98,7 +98,7 @@ def getCredsFromSplunkStorage():
 def authenticate():
     for retry in range(RETRY_COUNT):
         authRequestJson = json.dumps(authRequest)
-        authResponse = requests.post(scwaAuthUrl, data=authRequestJson, headers=authHeaders)
+        authResponse = requests.post(scwaAuthUrl, data=authRequestJson, headers=authHeaders, verify=False)
         if authResponse.status_code != requests.codes.ok:
             if retry >= RETRY_COUNT:
                 authResponse.raise_for_status()
@@ -151,11 +151,11 @@ try:
     while True:
         getScwaEventsRequest['pageNumber'] = pageNumber
         getScwaEventsRequestJson = json.dumps(getScwaEventsRequest)
-        scwaEventsResponse = requests.post(getScwaEventsUrl, data=getScwaEventsRequestJson, headers=authHeaders)
+        scwaEventsResponse = requests.post(getScwaEventsUrl, data=getScwaEventsRequestJson, headers=authHeaders, verify=False)
 
         if scwaEventsResponse.status_code == 401:
             authenticate()
-            scwaEventsResponse = requests.post(getScwaEventsUrl, data=getScwaEventsRequestJson, headers=authHeaders)
+            scwaEventsResponse = requests.post(getScwaEventsUrl, data=getScwaEventsRequestJson, headers=authHeaders, verify=False)
 
         if scwaEventsResponse.status_code != requests.codes.ok:
             scwaEventsResponse.raise_for_status()
