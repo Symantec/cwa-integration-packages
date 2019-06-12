@@ -1,7 +1,7 @@
 # Cloud Workload Assurance integration with Splunk. 
 The integration enables you to see compliance events on Splunk.
 
-# Prerequisites for CWA integration with Jira
+# Prerequisites for CWA integration with Splunk
  1. Install Python 2.7 or above 
  
 # Steps to configure the Splunk integration
