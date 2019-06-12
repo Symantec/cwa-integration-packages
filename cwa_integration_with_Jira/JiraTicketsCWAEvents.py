@@ -2,6 +2,10 @@
 #
 # Copyright 2019 Symantec Corporation. All rights reserved.
 #
+import sys
+if sys.version_info[0] < 3 or sys.version_info[1] < 7:
+    print("You must have python 3.7 or above to execute the script. Current version is "+str(sys.version_info[0]) +"."+str(sys.version_info[1]))
+    exit()
 import json
 from pathlib import Path
 from jira import JIRA
