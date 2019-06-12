@@ -12,6 +12,7 @@ The Licensed Software and Documentation are deemed to be commercial computer sof
 
 Symantec Corporation 350 Ellis Street Mountain View, CA 94043 https://www.symantec.com
 
+###### You must have at-least 2.7 version of python to execute the script
 
 1. Login to SCWA Portal → Settings → General Settings → API Keys. Copy CUSTOMER_ID, DOMAIN_ID, CLIENT_ID and CLIENT_SECRET values.
 2. Edit configuration file 'ScwaGetEventsConfig.ini' in 'Credentials' section. Update respective keys with the values copied in the above step.
