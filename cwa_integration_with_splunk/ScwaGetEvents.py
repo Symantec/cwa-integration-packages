@@ -20,6 +20,12 @@ CUSTOMER_ID = 'CUSTOMER_ID'
 DOMAIN_ID = 'DOMAIN_ID'
 CLIENT_ID = 'CLIENT_ID'
 CLIENT_SECRET = 'CLIENT_SECRET'
+PROXY_STATUS = 'PROXY_STATUS'
+PROTOCOL = 'PROTOCOL'
+PROXY_HOST = 'HOST'
+PROXY_USER_NAME = 'USER_NAME'
+PROXY_PASSWORD = 'PASSWORD'
+PROXY_PORT = 'PROXY_PORT'
 
 if os.name == 'nt':
     SPLUNK_HOME = 'C:\Program Files\Splunk'
@@ -33,6 +39,7 @@ STATUS_INI = os.path.join(SPLUNK_HOME, 'bin', 'scripts', 'ScwaGetEventsStatus.st
 STATUS_DATES_SECTION = 'ScwaGetEventsDates'
 CONFIG_CREDS_SECTION = 'Credentials'
 CONFIG_EVENTS_SECTION = 'Events'
+CONFIG_PROXY_SECTION = 'Proxy'
 START_DATE = 'startDate'
 EVENT_TYPE_FILTER = 'EventTypeFilter'
 GET_EVENTS_FROM_DAYS = 'GetEventsFromDays'
@@ -45,7 +52,9 @@ getScwaEventsUrl = 'https://scwp.securitycloud.symantec.com/dcs-service/dcscloud
 authHeaders = {'Content-type': 'application/json'}
 authRequest = {}
 eventDatetime = ''
-
+proxy = {}
+proxyStatus = "disabled"
+update_status_file = True
 getScwaEventsRequest = {'pageSize': PAGE_SIZE, 'order': 'ASCENDING', 'searchFilter': {}, 'displayLabels': 'false'}
 
 
@@ -102,7 +111,10 @@ def getCredsFromSplunkStorage():
 def authenticate():
     for retry in range(RETRY_COUNT):
         authRequestJson = json.dumps(authRequest)
-        authResponse = requests.post(scwaAuthUrl, data=authRequestJson, headers=authHeaders, verify=False)
+        if proxyStatus.lower() == "enabled":
+            authResponse = requests.post(scwaAuthUrl, data=authRequestJson, headers=authHeaders, proxies=proxy, verify=False)
+        else:
+            authResponse = requests.post(scwaAuthUrl, data=authRequestJson, headers=authHeaders, verify=False)
         if authResponse.status_code != requests.codes.ok:
             if retry >= RETRY_COUNT:
                 authResponse.raise_for_status()
@@ -118,6 +130,20 @@ try:
     # setupLogging()
     Config = configparser.ConfigParser()
     Config.read(CONFIG_INI)
+    proxyStatus = Config.get(CONFIG_PROXY_SECTION, PROXY_STATUS)
+    if proxyStatus.lower() == "enabled":
+        proxy_protocol = Config.get(CONFIG_PROXY_SECTION, PROTOCOL)
+        proxy_host = Config.get(CONFIG_PROXY_SECTION, PROXY_HOST)
+        proxy_user = Config.get(CONFIG_PROXY_SECTION, PROXY_USER_NAME)
+        proxy_password = Config.get(CONFIG_PROXY_SECTION, PROXY_PASSWORD)
+        proxy_port = Config.get(CONFIG_PROXY_SECTION, PROXY_PORT)
+        if proxy_protocol == "" or proxy_host == "" or proxy_user == "" or proxy_password == "" or proxy_port == "":
+            logging.error("You have kept proxy enabled in config.ini file, please provide values for proxy PROTOCOL, "
+                          "HOST, USER_NAME, PASSWORD, PROXY_PORT under \"Proxy\" section in "+CONFIG_INI + " file.")
+            update_status_file = False
+            exit(1)
+        else:
+            proxy[proxy_protocol] = proxy_protocol + "://" + proxy_user + ":" + proxy_password + "@" + proxy_host + ":" + proxy_port
     customerId = Config.get(CONFIG_CREDS_SECTION, CUSTOMER_ID)
     domainId = Config.get(CONFIG_CREDS_SECTION, DOMAIN_ID)
     creds = getCreds()
@@ -155,11 +181,18 @@ try:
     while True:
         getScwaEventsRequest['pageNumber'] = pageNumber
         getScwaEventsRequestJson = json.dumps(getScwaEventsRequest)
-        scwaEventsResponse = requests.post(getScwaEventsUrl, data=getScwaEventsRequestJson, headers=authHeaders, verify=False)
+        if proxyStatus.lower() == "enabled":
+            scwaEventsResponse = requests.post(getScwaEventsUrl, data=getScwaEventsRequestJson, headers=authHeaders, proxies=proxy,verify=False)
+        else:
+            scwaEventsResponse = requests.post(getScwaEventsUrl, data=getScwaEventsRequestJson, headers=authHeaders, verify=False)
 
         if scwaEventsResponse.status_code == 401:
             authenticate()
-            scwaEventsResponse = requests.post(getScwaEventsUrl, data=getScwaEventsRequestJson, headers=authHeaders, verify=False)
+            if proxyStatus.lower() == "enabled":
+                scwaEventsResponse = requests.post(getScwaEventsUrl, data=getScwaEventsRequestJson, headers=authHeaders,
+                                                   proxies=proxy,  verify=False)
+            else:
+                scwaEventsResponse = requests.post(getScwaEventsUrl, data=getScwaEventsRequestJson, headers=authHeaders, verify=False)
 
         if scwaEventsResponse.status_code != requests.codes.ok:
             scwaEventsResponse.raise_for_status()
