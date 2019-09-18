@@ -15,7 +15,7 @@ Compliance
 	* e.g. Setting 'GetEventsFromDays=5' will get 5 days of historical events from the current date.
 	* e.g. Setting 'GetEventsFromDays=30' will get 30 days of historical events from the current date.
 5. Install Splunk if not already installed.
-6. Copy 'splunklib' folder to '$SPLUNK_HOME/bin/scripts/'.
+6. Copy 'splunklib' and 'backports' folders to '$SPLUNK_HOME/bin/scripts/'.
 7. Login to the splunk Server instance/VM and update the permissions to copy scripts at location  '/opt/splunk/bin/scripts'.
 8. Copy script and configuration files 'ScwaGetEvents.py', 'ScwaGetEventsConfig.ini' and 'ScwaGetEventsStatus.status' on Splunk Server to locations '/opt/splunk/bin/scripts' (if Splunk is on Windows then 'C:\Program Files\Splunk\bin\scripts') directory.
 Run the following commands to provide permissions to splunk user to execute scripts,
