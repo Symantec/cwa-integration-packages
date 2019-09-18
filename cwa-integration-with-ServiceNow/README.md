@@ -18,7 +18,7 @@ The integration enables you to open ServiceNow tickets for failed checks for man
 	 * `SNOWConfiguration`
     * `SNOWInstance` 
     * `SNOWUserName` 
-    * `SNOWPassword`
+    * `SNOWPassword` (Base 64 encoded password, Refer to "https://www.base64encode.net/")
     * `SNOWSummaryFieldLimit (The character limit of summary filed of SNOW incidents)`
  3. Set up a cron job for the script to run once a day.
 
